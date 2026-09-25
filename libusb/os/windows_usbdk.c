@@ -367,7 +367,7 @@ static int usbdk_get_config_descriptor(struct libusb_device *dev, uint8_t config
 
 	config_header = (PUSB_CONFIGURATION_DESCRIPTOR)priv->config_descriptors[config_index];
 
-	size = min(config_header->wTotalLength, len);
+	size = config_header->wTotalLength < len ? config_header->wTotalLength : len;
 	memcpy(buffer, config_header, size);
 	return (int)size;
 }
